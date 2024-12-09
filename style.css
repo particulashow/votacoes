@@ -12,63 +12,58 @@ body {
 }
 
 .container {
-    width: 90%;
+    width: 80%;
     max-width: 800px;
+    text-align: center;
 }
 
 h1 {
     font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #ffc75f;
     text-transform: uppercase;
-    background: linear-gradient(90deg, #ff6f91, #ff9671, #ffc75f);
-    -webkit-background-clip: text;
-    color: transparent;
-    margin: 0;
-    text-align: center;
 }
 
-.vote-container {
+.chart-container {
     display: flex;
     gap: 20px;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    height: 200px;
 }
 
-.vote {
+.bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100px;
+    height: 100%;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    flex: 1;
-    min-width: 200px;
-    max-width: 250px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
 }
 
-.vote-title {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+.bar-inner {
+    width: 100%;
+    background: linear-gradient(90deg, #ff6f91, #ff9671);
+    height: 0%;
+    transition: height 0.5s ease;
+}
+
+.label {
+    position: absolute;
+    top: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
     color: #ffc75f;
 }
 
-.progress-bar {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    height: 15px;
-    margin: 10px 0;
-    overflow: hidden;
-}
-
-.progress {
-    background: linear-gradient(90deg, #ff6f91, #ff9671);
-    height: 100%;
-    width: 0%;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.vote-number {
-    font-size: 2.5em;
+.vote-count {
+    position: absolute;
+    bottom: 10px;
+    font-size: 1.5em;
     font-weight: bold;
-    color: #ff9671;
+    color: #fff;
 }
