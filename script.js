@@ -1,23 +1,25 @@
 // Configuração do streamID e votos
-const streamID = "748c0ff7"; // ID específico da sessão
-const votes = { A: 0, B: 0, C: 0 };
+const streamID = "748c0ff7"; // Substituir pelo streamID real
+const votes = { yes: 0, no: 0 };
 
 // Conecta ao WebSocket do StreamNinja
 const socket = new WebSocket(`wss://socialstream.ninja/socket?streamID=${streamID}`);
 
-// Atualiza os votos e as barras de progresso
+// Atualiza os votos e o gráfico
 function updateUI() {
-    const totalVotes = votes.A + votes.B + votes.C;
+    const totalVotes = votes.yes + votes.no;
 
-    // Atualiza os valores
-    document.getElementById('voteA').textContent = votes.A;
-    document.getElementById('voteB').textContent = votes.B;
-    document.getElementById('voteC').textContent = votes.C;
+    // Calcula as percentagens
+    const yesPercentage = totalVotes > 0 ? (votes.yes / totalVotes) * 100 : 0;
+    const noPercentage = totalVotes > 0 ? (votes.no / totalVotes) * 100 : 0;
 
-    // Atualiza as barras de progresso
-    document.getElementById('progressA').style.width = totalVotes > 0 ? `${(votes.A / totalVotes) * 100}%` : '0%';
-    document.getElementById('progressB').style.width = totalVotes > 0 ? `${(votes.B / totalVotes) * 100}%` : '0%';
-    document.getElementById('progressC').style.width = totalVotes > 0 ? `${(votes.C / totalVotes) * 100}%` : '0%';
+    // Atualiza os gráficos
+    document.getElementById('yes-inner').style.height = `${yesPercentage}%`;
+    document.getElementById('no-inner').style.height = `${noPercentage}%`;
+
+    // Atualiza os números
+    document.getElementById('yes-count').textContent = votes.yes;
+    document.getElementById('no-count').textContent = votes.no;
 }
 
 // Processa mensagens recebidas do WebSocket
@@ -27,12 +29,11 @@ socket.onmessage = (event) => {
 
         // Verifica o streamID e processa o texto
         if (message.streamID === streamID) {
-            const text = message.text?.trim().toUpperCase();
+            const text = message.text?.trim().toLowerCase();
 
             // Incrementa os votos com base no texto
-            if (text === 'A') votes.A++;
-            if (text === 'B') votes.B++;
-            if (text === 'C') votes.C++;
+            if (text === 'sim') votes.yes++;
+            if (text === 'não') votes.no++;
 
             updateUI();
         }
