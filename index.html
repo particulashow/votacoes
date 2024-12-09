@@ -3,25 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votação: Sim ou Não</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Teste de Ligação WebSocket</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3em;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Votação ao Vivo</h1>
-        <div class="chart-container">
-            <div class="bar" id="yes-bar">
-                <div class="label">Sim</div>
-                <div class="bar-inner" id="yes-inner"></div>
-                <div class="vote-count" id="yes-count">0</div>
-            </div>
-            <div class="bar" id="no-bar">
-                <div class="label">Não</div>
-                <div class="bar-inner" id="no-inner"></div>
-                <div class="vote-count" id="no-count">0</div>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+    <h1 id="message">Aguardando mensagens...</h1>
+    <script>
+        // Conexão ao WebSocket
+        const socket = new WebSocket("wss://io.socialstream.ninja");
+
+        // Quando a conexão é aberta
+        socket.onopen = () => {
+            document.getElementById("message").textContent = "Ligado ao WebSocket!";
+        };
+
+        // Quando uma mensagem é recebida
+        socket.onmessage = (event) => {
+            document.getElementById("message").textContent = `Mensagem recebida: ${event.data}`;
+        };
+
+        // Quando ocorre um erro
+        socket.onerror = (error) => {
+            document.getElementById("message").textContent = "Erro ao conectar ao WebSocket.";
+            console.error("Erro no WebSocket:", error);
+        };
+
+        // Quando a conexão é encerrada
+        socket.onclose = (event) => {
+            document.getElementById("message").textContent = "Conexão encerrada.";
+            console.log(`Conexão encerrada. Código: ${event.code}, Motivo: ${event.reason}`);
+        };
+    </script>
 </body>
 </html>
