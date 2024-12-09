@@ -3,51 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Ligação WebSocket</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: black;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3em;
-        }
-    </style>
+    <title>Votação: Sim ou Não</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 id="message">Aguardando mensagens...</h1>
-    <script>
-        // Conexão ao WebSocket
-        const socket = new WebSocket("wss://io.socialstream.ninja");
-
-        // Quando a conexão é aberta
-        socket.onopen = () => {
-            document.getElementById("message").textContent = "Ligado ao WebSocket!";
-        };
-
-        // Quando uma mensagem é recebida
-        socket.onmessage = (event) => {
-            document.getElementById("message").textContent = `Mensagem recebida: ${event.data}`;
-        };
-
-        // Quando ocorre um erro
-        socket.onerror = (error) => {
-            document.getElementById("message").textContent = "Erro ao conectar ao WebSocket.";
-            console.error("Erro no WebSocket:", error);
-        };
-
-        // Quando a conexão é encerrada
-        socket.onclose = (event) => {
-            document.getElementById("message").textContent = "Conexão encerrada.";
-            console.log(`Conexão encerrada. Código: ${event.code}, Motivo: ${event.reason}`);
-        };
-    </script>
+    <h1>Votação: Sim ou Não</h1>
+    <div class="chart-container">
+        <div class="bar yes">
+            <div class="label">Sim</div>
+            <div class="bar-inner" id="yes-bar"></div>
+            <div class="vote-count" id="yes-count">0</div>
+        </div>
+        <div class="bar no">
+            <div class="label">Não</div>
+            <div class="bar-inner" id="no-bar"></div>
+            <div class="vote-count" id="no-count">0</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
