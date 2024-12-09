@@ -1,63 +1,25 @@
-body {
-    font-family: Arial, sans-serif;
-    background: black;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    text-align: center;
-}
-
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-}
-
-.chart-container {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-end;
-    height: 200px;
-}
-
-.bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-}
-
-.bar-inner {
-    width: 100%;
-    background: linear-gradient(90deg, #4caf50, #8bc34a);
-    height: 0%;
-    transition: height 0.5s ease;
-}
-
-.bar.no .bar-inner {
-    background: linear-gradient(90deg, #f44336, #e91e63);
-}
-
-.label {
-    position: absolute;
-    top: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-}
-
-.vote-count {
-    position: absolute;
-    bottom: 10px;
-    font-size: 1.5em;
-    font-weight: bold;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votação: Sim ou Não</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Votação: Sim ou Não</h1>
+    <div class="chart-container">
+        <div class="bar yes">
+            <div class="label">Sim</div>
+            <div class="bar-inner" id="yes-bar"></div>
+            <div class="vote-count" id="yes-count">0</div>
+        </div>
+        <div class="bar no">
+            <div class="label">Não</div>
+            <div class="bar-inner" id="no-bar"></div>
+            <div class="vote-count" id="no-count">0</div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
