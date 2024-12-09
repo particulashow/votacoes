@@ -1,5 +1,8 @@
-// Configuração inicial
-const socket = new WebSocket("wss://io.socialstream.ninja");
+// Session ID fixo
+const sessionID = "748c0ff7";
+
+// Conecta ao WebSocket com o session ID
+const socket = new WebSocket(`wss://io.socialstream.ninja?sessionID=${sessionID}`);
 const votes = { yes: 0, no: 0 };
 
 // Atualiza os votos e as barras
@@ -28,15 +31,19 @@ socket.onopen = () => {
 socket.onmessage = (event) => {
     try {
         const message = JSON.parse(event.data);
-        const text = message.text?.trim().toLowerCase();
 
-        if (text === "sim") {
-            votes.yes++;
-        } else if (text === "não") {
-            votes.no++;
+        // Verifica se a mensagem é da sessão correta
+        if (message.sessionID === sessionID) {
+            const text = message.text?.trim().toLowerCase();
+
+            if (text === "sim") {
+                votes.yes++;
+            } else if (text === "não") {
+                votes.no++;
+            }
+
+            updateUI();
         }
-
-        updateUI();
     } catch (error) {
         console.error("Erro ao processar mensagem:", error);
     }
